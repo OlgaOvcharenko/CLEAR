@@ -1,2 +1,7 @@
 .idea
 others
+result/CLEAR
+logs/
+result/
+pcl/
+pcl/__pycache__/*

@@ -40,7 +40,7 @@ class MLPEncoder(nn.Module):
     
     def forward(self, x):
 
-        x = self.encoder(x)
+        x = self.encoder(x.float())
 
         return x
 
