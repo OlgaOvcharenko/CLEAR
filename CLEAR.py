@@ -148,7 +148,9 @@ def main_worker(args):
 
     # Load h5ad data
     input_h5ad_path = args.input_h5ad_path
+    print(input_h5ad_path)
     processed_adata = sc.read_h5ad(input_h5ad_path)
+    print(processed_adata)
     obs_label_colname = args.obs_label_colname
 
     # find dataset name

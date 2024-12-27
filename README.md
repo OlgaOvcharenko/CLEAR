@@ -55,7 +55,8 @@ After completing all preprocessing steps, you can use the command `adata.write(U
 
 With prepared input data, you can call the following script to implement CLEAR:
 ```bash
-python CLEAR.py --input_h5ad_path="USE_FOR_CLEAR.h5ad" --epochs 100 --lr 0.01 --batch_size 512 --pcl_r 1024 --cos --gpu 0
+python CLEAR.py --input_h5ad_path="/cluster/home/oovcharenko/Olga_Data/ImmuneAtlas.h5ad" --
+epochs 100 --lr 0.01 --batch_size 512 --pcl_r 1024 --cos --gpu 0 --obs_label_colname cell_type
 ```
 Here, we only provide a set of commonly used CLEAR parameters for reference. You can run `python CLEAR.py -h` for more information.
 

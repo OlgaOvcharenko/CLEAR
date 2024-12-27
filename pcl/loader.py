@@ -74,7 +74,7 @@ class scRNAMatrixInstance(Dataset):
             self.label_decoder = {v: k for k, v in self.label_encoder.items()}
         else:
             self.label = None
-            print("Can not find corresponding labels")
+            print("")
 
         # do the transformation
         self.transform = transform
