@@ -25,8 +25,8 @@ _BATCH_METRICS = BatchCorrection(graph_connectivity=True,
 
 
 def evaluate_model(adata, batch_key="batch", cell_type_label="cell_type_l1"):
-    names_obs = ['X_PCA','new']
-    print(names_obs)
+    names_obs = ['X_pca','new']
+    print(adata)
     bm = Benchmarker(
                 adata,
                 batch_key=batch_key,
@@ -69,34 +69,41 @@ for mypath in only_files:
             data = file.split("_")[2].split(".")[0]
             if data == "ImmuneAtlas":
                 cell_type_label = "cell_type"
+                batch = "batchlb"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/ImmuneAtlas.h5ad')
 
             elif data == "Lung":
                 cell_type_label = "cell_type"
+                batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/Lung.h5ad')
 
             elif data == "MCA":
                 cell_type_label = "CellType"
+                batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/MCA.h5ad')
 
             elif data == "Pancreas":
                 cell_type_label = "celltype"
+                batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/Pancreas.h5ad')
 
             elif data == "PBMC":
                 cell_type_label = "CellType"
+                batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/PBMC.h5ad')
 
             elif data == "ImmHuman":
                 cell_type_label = "CellType"
+                batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/ImmHuman.h5ad')
             
+
+            print(data)
             adata_RNA.obsm["new"] = pd.read_csv(mypath + file, header=None).to_numpy()
-            
-            sc.tl.pca(adata_RNA)
 
-            df = evaluate_model(adata=adata_RNA, cell_type_label=cell_type_label)
-            print(df)
+            # sc.tl.pca(adata_RNA)
 
-            df.to_csv(f'{mypath}/bc/{data}_unscaled.csv')
-exit()
+            # df = evaluate_model(adata=adata_RNA, batch_key=batch, cell_type_label=cell_type_label)
+            # print(df)
+
+            # df.to_csv(f'{mypath}/bc/{data}_unscaled.csv')
