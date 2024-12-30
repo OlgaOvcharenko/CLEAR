@@ -59,11 +59,12 @@ def scale_result(df):
 repeat = 0
 
 
-only_files = ['result/CLEAR/', 'result/CLEAR_0/']
+# only_files = ['result/CLEAR/', 'result/CLEAR_0/']
+only_files = ['result/CLEAR_0/']
 
 for mypath in only_files:
-    filenames = next(walk(mypath), (None, None, []))[2]  # [] if no file    
-    
+    filenames = next(walk(mypath), (None, None, []))[2]  # [] if no file 
+
     for file in filenames:
         if file.startswith("feature_"):
             data = file.split("_")[2].split(".")[0]
@@ -77,10 +78,14 @@ for mypath in only_files:
                 batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/Lung.h5ad')
 
+                continue
+
             elif data == "MCA":
                 cell_type_label = "CellType"
                 batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/MCA.h5ad')
+
+                continue
 
             elif data == "Pancreas":
                 cell_type_label = "celltype"
@@ -96,14 +101,19 @@ for mypath in only_files:
                 cell_type_label = "CellType"
                 batch = "batch"
                 adata_RNA = sc.read_h5ad('/cluster/home/oovcharenko/Olga_Data/ImmHuman.h5ad')
-            
+
+                continue
+                
+            else:
+                continue
 
             print(data)
+            
             adata_RNA.obsm["new"] = pd.read_csv(mypath + file, header=None).to_numpy()
 
-            # sc.tl.pca(adata_RNA)
+            sc.tl.pca(adata_RNA)
 
-            # df = evaluate_model(adata=adata_RNA, batch_key=batch, cell_type_label=cell_type_label)
-            # print(df)
-
-            # df.to_csv(f'{mypath}/bc/{data}_unscaled.csv')
+            df = evaluate_model(adata=adata_RNA, batch_key=batch, cell_type_label=cell_type_label)
+            
+            print(df)
+            df.to_csv(f'{mypath}/bc/{data}_unscaled.csv')
